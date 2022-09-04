@@ -32,6 +32,9 @@ public class BankMenu {
 				int birth =  sc.nextInt();
 				
 				ac.join(name, id, pw, birth);
+				
+				ac.setMax(ac.getMax()+1);
+				System.out.println(ac.getMax());
 			
 			case 2: 
 				// login();

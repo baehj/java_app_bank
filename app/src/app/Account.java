@@ -10,17 +10,8 @@ public class Account implements Bank{
 	private int balance=0; //잔액
 	// private int creditRating; // 신용등급
 	
-	private int max=0; // 가입자수
-	
-	public int getMax() {
-		return max;
-	}
-
-	public void setMax(int max) {
-		this.max = max;
-	}
-
-	Account[] member = new Account[10];
+	private static int max=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
+	private static Account[] member = new Account[10];
 	
 	public Account account; //field
     
@@ -33,6 +24,14 @@ public class Account implements Bank{
 		this.birth = birth;
 		this.accountNum = makeAccountNum();
 		this.balance = 0;
+	}
+	
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
 	}
 	
 	public String getName() {
@@ -126,7 +125,8 @@ public class Account implements Bank{
 			//Account ac = new Account(name, id, pw, birth);
 			account = new Account(name, id, pw, birth);
 			member[getMax()] = account;
-		}
+			System.out.println(getMax());
+		
 		// 3. 가입완료
 		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 		System.out.println(member[getMax()].getName() + "님의 가입이 완료되었습니다.");
@@ -138,13 +138,15 @@ public class Account implements Bank{
 		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 		
 		// 4. 가입회원수 +1
-		setMax(getMax()+1);
+		// setMax(getMax()+1);
+		// System.out.println(getMax());
+		}
 	}
 	
 	public int makeAccountNum() {
 		int result = 0;
 		int accountNum = 000000;
-		int tempAccountNum = (int) (Math.random()*89999+10000);
+		int tempAccountNum = (int) (Math.random()*899999+100000);
 		for(int i=0; i<member.length; i++) {
 			if(member[i] == null) continue;
 			if(member[i].getId() != "") {
