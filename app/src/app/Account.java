@@ -7,14 +7,14 @@ public class Account implements Bank{
 	private int birth; // 생년월일
 	private int accountNum; // 계좌번호
 	private int pw; //비밀번호
-	private int balance=0; //잔액
-	// private int creditRating; // 신용등급
+	private int balance = 0; //잔액
+	private int login = 0; // -1은 로그인X, 1은 로그인O
 	
 	private static int max=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
 	private static Account[] member = new Account[10];
+	// 배열, 컬렉션 모두. Account를 담을 것이기 때문에 menu로 빼줘서 사용해야함. 
 	
 	public Account account; //field
-    
 	public Account() {}
 	
 	public Account (String name, String id, int pw, int birth) {
@@ -24,16 +24,15 @@ public class Account implements Bank{
 		this.birth = birth;
 		this.accountNum = makeAccountNum();
 		this.balance = 0;
+		this.login = 0;
 	}
 	
 	public int getMax() {
 		return max;
 	}
-
 	public void setMax(int max) {
 		this.max = max;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -70,41 +69,68 @@ public class Account implements Bank{
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-	
-	/*
-	 * public int getCreditRating() { return creditRating; } public void
-	 * setCreditRating(int creditRating) { this.creditRating = creditRating; }
-	 */
-	
+	public int getLogin() {
+		return login;
+	}
+	public void setLogin(int login) {
+		this.login = login;
+	}
 	
 	public void deposit(int amount) {
-		System.out.println("예금 서비스입니다. 얼마를 입금하시겠습니까?>");
-		Account ac = new Account();
-		ac.setBalance(ac.getBalance()+amount);
-		System.out.println(amount + "원이 입금되었습니다.");
-		System.out.println("잔고금액은 " + ac.getBalance() + "원입니다.");
+		int idResult = 0;
+		for(int i=0; i<member.length; i++) {
+			if(member[i] == null) continue; 
+			if(member[i].getLogin() == 1) {
+				idResult = 1;
+				member[i].setBalance(member[i].getBalance()+amount);		
+			}
+			System.out.println(amount + "원이 입금되었습니다.");
+			System.out.println("잔액은 " + member[i].getBalance() + "원입니다.");
+		}
+		if(idResult==0) {
+			System.out.println("로그인 후 사용 가능합니다.");
+		}
 		System.out.println();
 	}
 	
- 	
-	public void withdraw(int amount) {
-		System.out.println("출금 서비스입니다. 얼마를 출금하시겠습니까?>");
-		Account ac = new Account();
-		if (amount <= ac.getBalance() && amount<=max) {
-			ac.setBalance(ac.getBalance()-amount);
-			System.out.println(amount +"원이 출금되었습니다.");
-			System.out.println("잔고금액은 " + ac.getBalance() + "원입니다.");
-		} else if (amount > ac.getBalance() && amount<=max) {
-			System.out.println("출금금액이 잔고금액을 초과하였습니다");
+ 	public void withdraw(int amount) {
+		int idResult = 0;
+		for(int i=0; i<member.length; i++) {
+			if(member[i] == null) continue; 
+			if(member[i].getLogin() == 1) {
+				idResult = 1;
+				if(amount <= member[i].getBalance() && amount<=max) {
+					member[i].setBalance(member[i].getBalance()-amount);
+					System.out.println(member[i].getName() + "님의 계좌에서 " + amount +"원이 출금되었습니다.");
+					System.out.println("잔액은 " + member[i].getBalance() + "원입니다.");
+				} else if (amount > member[i].getBalance()) {
+					System.out.println("출금액이 잔액을 초과하여 출금할 수 없습니다.");
+					System.out.println("출금액 : " + amount);
+					System.out.println("잔액 : " + member[i].getBalance());
+				} else if (amount > max) {
+					System.out.println("최대 출금 가능액은 1000만원 입니다.");
+				}
+			}
+		}
+		if(idResult==0) {
+			System.out.println("로그인 후 사용 가능합니다.");
 		}
 		System.out.println();
 	}
 	
 	public void balance() {
 		System.out.println("잔액확인 서비스입니다.>");
-		Account ac = new Account();
-		System.out.println("잔고금액은 " + ac.getBalance() + "원입니다.");
-		System.out.println();
+		int idResult = 0;
+		for(int i=0; i<member.length; i++) {
+			if(member[i] == null) continue; 
+			if(member[i].getLogin() == 1) {
+				idResult = 1;
+				System.out.println("잔고금액은 " + member[i].getBalance() + "원입니다.");
+			}
+		}
+		if(idResult==0) {
+			System.out.println("로그인 후 사용 가능합니다.");
+		}
 	}
 	
 	public void join(String name, String id, int pw, int birth) {
@@ -125,8 +151,6 @@ public class Account implements Bank{
 			//Account ac = new Account(name, id, pw, birth);
 			account = new Account(name, id, pw, birth);
 			member[getMax()] = account;
-			System.out.println(getMax());
-		
 		// 3. 가입완료
 		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 		System.out.println(member[getMax()].getName() + "님의 가입이 완료되었습니다.");
@@ -136,14 +160,12 @@ public class Account implements Bank{
 		System.out.println("계좌번호 :  " + member[getMax()].getAccountNum());
 		System.out.println("생년월일 :  " + member[getMax()].getBirth());
 		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
-		
 		// 4. 가입회원수 +1
-		// setMax(getMax()+1);
-		// System.out.println(getMax());
+		setMax(getMax()+1);
 		}
 	}
 	
-	public int makeAccountNum() {
+	public int makeAccountNum() { // 계좌번호생성
 		int result = 0;
 		int accountNum = 000000;
 		int tempAccountNum = (int) (Math.random()*899999+100000);
@@ -161,18 +183,20 @@ public class Account implements Bank{
 	}
 	
 	public void login(String id, int pw) {
-		Account ac = new Account();
-		if(id.equals(ac.getId()) && pw==getPw()) {
-			System.out.println(ac.getName() + "님 로그인되었습니다.");
-		} else {
-			System.out.println("올바른 회원 정보가 아닙니다.");
-		}		
+		int iNum=-1;
+		for(int i=0; i<member.length; i++) {
+			if(member[i] == null) continue; 
+			if(id.equals(member[i].getId()) && pw==member[i].getPw()) {
+				member[i].setLogin(1);
+				iNum = i;
+				System.out.println(member[i].getName() + "로그인 되었습니다.");
+			} 
+		}
+		if(iNum==-1) {
+			System.out.println("아이디와 비밀번호를 확인해주세요.");
+		}
 	}
 	
-	/*
-	 * public static check(String id, int pw) { if(id.equals(ac.getId()) &&
-	 * pw==getPw()) { System.out.println(ac.getName() + "님 로그인되었습니다."); } else {
-	 * System.out.println("올바른 회원 정보가 아닙니다."); } return; }
-	 */
+	
 
 }
