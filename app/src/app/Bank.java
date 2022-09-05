@@ -2,7 +2,7 @@ package app;
 
 public interface Bank {
 		
-	public int max = 10000000;
+	public int max = 10000000; // 인터페이스는 상수값만 가질 수 있다.
 	
 	public static void join() {}
 	public static void login() {}
