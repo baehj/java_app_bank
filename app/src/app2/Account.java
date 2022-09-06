@@ -9,7 +9,7 @@ public class Account implements Bank{
 	private String name; // 이름
 	private String id; // 아이디
 	private int birth; // 생년월일
-	private int accountNum; // 계좌번호
+	private int accountNum; // 계좌번호 
 	private int pw; //비밀번호
 	private int phone; // 전화번호
 	
