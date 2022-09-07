@@ -21,8 +21,8 @@ public class ScrollBarPieces {
     //String title = (args.length == 0 ? "java" : args[0]);
     JFrame frame = new JFrame("java");
     JPanel p = new JPanel();
-    GridLayout grid = new GridLayout(5, 2, 5 ,20); // 행, 열, 수평갭, 수직갭
-    grid.setVgap(60);
+    GridLayout grid = new GridLayout(5, 2, 5 ,60); // 행, 열, 수평갭, 수직갭
+    //grid.setVgap(60);
     
     p.setLayout(grid);
     p.add(scb1);
@@ -43,7 +43,8 @@ public class ScrollBarPieces {
     
     Container contentPane = frame.getContentPane();
     //contentPane.add(p, BorderLayout.WEST);
-    contentPane.add(p);
+    // contentPane.add(p);
+  
     
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(600, 400);
