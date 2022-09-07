@@ -38,7 +38,7 @@ public class Account implements Bank{
 		this.balance = 0;
 		this.login = 0;
 	}
-	
+	 
 	public int getTotal() {
 		return total;
 	}
