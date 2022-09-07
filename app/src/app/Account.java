@@ -1,12 +1,15 @@
 package app;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Account implements Bank{
 	
 	private String name; //이름
 	private String id; // 아이디
 	private int birth; // 생년월일
 	private int accountNum; // 계좌번호
-	private int pw; //비밀번호
+	private int pw; // 비밀번호
 	private int balance = 0; //잔액
 	private int login = 0; // -1은 로그인X, 1은 로그인O
 	
@@ -18,6 +21,7 @@ public class Account implements Bank{
 	public Account() {}
 	
 	public Account (String name, String id, int pw, int birth) {
+		
 		this.name = name;
 		this.id = id;
 		this.pw = pw;
@@ -76,6 +80,7 @@ public class Account implements Bank{
 		this.login = login;
 	}
 	
+
 	public void deposit(int amount) {
 		int idResult = 0;
 		for(int i=0; i<member.length; i++) {

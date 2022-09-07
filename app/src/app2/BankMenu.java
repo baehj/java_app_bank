@@ -14,7 +14,8 @@ public class BankMenu {
 		boolean run = true;
 		while (run) {
 			System.out.println("-------------------------------------");
-			System.out.println("1.회원가입 | 2.로그인 | 3.개인정보찾기 | 4.입금 | 5.출금 | 6.계좌이체 | 7.잔고확인 | 8.개인정보변경 | 9.로그아웃 | 10.종료");
+			System.out.println("1.회원가입 | 2.로그인 | 3.개인정보찾기 | 4.입금 | 5.출금 |"
+					+ "\n6.계좌이체 | 7.잔고확인 | 8.개인정보변경 | 9.로그아웃 | 10.종료");
 			System.out.println("-------------------------------------");
 			System.out.print("선택 >>> ");
 			int selectNo = sc.nextInt();

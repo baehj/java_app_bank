@@ -1,5 +1,6 @@
 package app2;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Account implements Bank{
@@ -9,10 +10,11 @@ public class Account implements Bank{
 	private String name; // 이름
 	private String id; // 아이디
 	private int birth; // 생년월일
-	private int accountNum; // 계좌번호  
+	private int accountNum; // 계좌번호
 	private int pw; //비밀번호
 	private int phone; // 전화번호
 	
+	private String joinDate; // 가입일
 	private int balance = 0; //잔액
 	private int login = 0; // 0은 로그인X, 1은 로그인O
 	private static int total=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
@@ -26,6 +28,13 @@ public class Account implements Bank{
 		this.birth = birth;
 		this.phone = phone;
 		this.accountNum = makeAccountNum();
+		
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = (cal.get(Calendar.MONTH)+1); // +1 꼭 해줘야 됨. 0부터 시작함
+		int date = cal.get(Calendar.DATE);
+		String joinDate = year + "년 " + month + "월 " + date + "일";
+		this.joinDate = joinDate;
 		this.balance = 0;
 		this.login = 0;
 	}
@@ -84,7 +93,13 @@ public class Account implements Bank{
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-
+	public String getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
+	}
+	
 	public void deposit(int amount) {
 		int idResult = 0;
 		for(Account member : BankMenu.member) {
@@ -165,6 +180,7 @@ public class Account implements Bank{
 		System.out.println("계좌번호 :  " + pw);
 		System.out.println("생년월일 :  " + birth);
 		System.out.println("전화번호 :  " + phone);
+		System.out.println("가입일 :  " + BankMenu.member.get(getTotal()).getJoinDate());
 		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 		// 4. 가입회원수 +1
 		setTotal(getTotal()+1);
