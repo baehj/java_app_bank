@@ -23,7 +23,7 @@ public class Account implements Bank{
 	public Account() {}
 	public Account (String name, String id, int pw, int birth, int phone) {
 		this.name = name;
-		this.id = id;
+		this.id = id; 
 		this.pw = pw; 
 		this.birth = birth;
 		this.phone = phone;  
