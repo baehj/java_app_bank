@@ -26,7 +26,7 @@ public class Account implements Bank{
 		this.id = id;
 		this.pw = pw; 
 		this.birth = birth;
-		this.phone = phone; 
+		this.phone = phone;  
 		this.accountNum = makeAccountNum();
 		
 		Calendar cal = Calendar.getInstance();
