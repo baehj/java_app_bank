@@ -43,11 +43,21 @@ public class BankMenu {
 				id = sc.next();
 				System.out.print("비밀번호를 입력해주세요. >>> ");
 				pw =  sc.nextInt();
-				ac.login(id, pw);
+				
+				try {
+					ac.login(id, pw);
+				} catch (Exception e) {
+					e.getMessage();
+				}
 				continue;
 			
 			case 3:
-				ac.findInfo();
+				
+				try {
+					ac.findInfo();
+				} catch (Exception e) {
+					e.getMessage();
+				}
 				continue;
 				
 			case 4:
@@ -78,7 +88,13 @@ public class BankMenu {
 			case 9:	// 로그아웃
 				System.out.println("로그아웃 하시겠습니까? 1.YES / 2.NO >");
 				int answer = sc.nextInt();
-				if(answer == 1) { ac.logout(); }
+				if(answer == 1) { 
+					try {
+						ac.logout();
+					} catch (Exception e) {
+						e.getMessage();
+					}
+				}
 				else System.out.println("전체메뉴로 돌아갑니다."); 
 				continue;
 				

@@ -25,7 +25,6 @@ public class Mission2 extends JFrame {
 	    scr1.setBlockIncrement(10);
 	   
 	    contentPane.add(p, "South");
-	   
 	    
 	}
 	

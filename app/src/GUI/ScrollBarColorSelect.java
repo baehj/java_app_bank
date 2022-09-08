@@ -39,7 +39,7 @@ public class ScrollBarColorSelect extends JFrame implements AdjustmentListener {
     Container contentPane = getContentPane();
 
     JPanel p = new JPanel();
-    p.setLayout(new GridLayout(3, 2,3,3));
+    p.setLayout(new GridLayout(3, 2, 3, 3));
 
     p.add(redLabel = new JLabel("Red 0"));
     p.add(red = new JScrollBar(Adjustable.HORIZONTAL, 0, 0, 0, 255));

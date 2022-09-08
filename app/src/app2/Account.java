@@ -171,23 +171,37 @@ public class Account implements Bank{
 			//Account ac = new Account(name, id, pw, birth);
 			account = new Account(name, id, pw, birth, phone);
 			BankMenu.member.add(account);
-		// 3. 가입완료
-		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
-		System.out.println(name + "님의 가입이 완료되었습니다.");
-		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
-		System.out.println("이름 :  " + name);
-		System.out.println("아이디 :  " + id);
-		System.out.println("계좌번호 :  " + pw);
-		System.out.println("생년월일 :  " + birth);
-		System.out.println("전화번호 :  " + phone);
-		System.out.println("가입일 :  " + BankMenu.member.get(getTotal()).getJoinDate());
-		System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
-		// 4. 가입회원수 +1
-		setTotal(getTotal()+1);
+			
+			
+			/*
+			 * File file = new File("C:/ioPractice/bankMember.txt"); FileWriter fwriter =
+			 * new FileWriter(file); BufferedWriter bw = new BufferedWriter(fwriter);
+			 * PrintWriter printw = new PrintWriter(bw,true); InputStream is = System.in;
+			 * InputStreamReader isr = new InputStreamReader(is); BufferedReader br = new
+			 * BufferedReader(isr); System.out.println("입력 : "); String str = "";
+			 * while(!str.equals("end")) { str = br.readLine(); printw.println(str); }
+			 * br.close(); printw.close();
+			 */
+			 
+			
+			// 3. 가입완료
+			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
+			System.out.println(name + "님의 가입이 완료되었습니다.");
+			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
+			System.out.println("이름 :  " + name);
+			System.out.println("아이디 :  " + id);
+			System.out.println("계좌번호 :  " + pw);
+			System.out.println("생년월일 :  " + birth);
+			System.out.println("전화번호 :  " + phone);
+			System.out.println("가입일 :  " + BankMenu.member.get(getTotal()).getJoinDate());
+			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
+			
+			// 4. 가입회원수 +1
+			setTotal(getTotal()+1);
 		}
 	}
 	
-	public void login(String id, int pw) {
+	public void login(String id, int pw) throws NotLoginException{
 		int loginCheck=-1;
 		for(Account member : BankMenu.member) {
 			if(id.equals(member.getId()) && pw==member.getPw()) {
@@ -197,7 +211,7 @@ public class Account implements Bank{
 			}
 		}
 		if(loginCheck==-1) {
-			System.out.println("아이디와 비밀번호를 확인해주세요.");
+			throw new NotLoginException();
 		}
 	}
 	
@@ -265,7 +279,7 @@ public class Account implements Bank{
 		}
 	}
 		
-	public void logout() {
+	public void logout() throws NotLoginingException{
 		int idResult = 0;
 		for(Account member : BankMenu.member) {
 			if(member.getLogin() == 1) {
@@ -274,12 +288,14 @@ public class Account implements Bank{
 				System.out.println("로그아웃 되었습니다.");
 			}
 		}
+		
 		if(idResult==0) {
-			System.out.println("로그인 상태가 아닙니다.");
+			throw new NotLoginingException();
 		}
+		// if(idResult==0) { System.out.println("로그인 상태가 아닙니다."); 
 	}
 	
-	public void findInfo() {
+	public void findInfo() throws NotLoginingException{
 		int idResult = 0;
 		for(Account member : BankMenu.member) {
 			if(member.getLogin() == 1) {
@@ -294,9 +310,11 @@ public class Account implements Bank{
 				System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			}
 		}
+		
 		if(idResult==0) {
-			System.out.println("로그인 상태가 아닙니다.");
+			throw new NotLoginingException();
 		}
+		// if(idResult==0) { System.out.println("로그인 상태가 아닙니다.");
 	}
 
 }
