@@ -1,17 +1,27 @@
-package GUI;
+package app3;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class JFrame_Test extends JFrame{
+import app2.Account;
+
+public class JFrame_Test extends JFrame implements ActionListener {
+	
+	private Scanner sc = new Scanner(System.in);
+	JButton p4Btn, p5BtnJoin, p5BtnId, p5BtnPw;
+	JTextField idIn, pwIn;
 	
 	public JFrame_Test() {
 		
@@ -66,15 +76,23 @@ public class JFrame_Test extends JFrame{
 		// 4/5 로그인버튼
 		JPanel p4 = new JPanel();
 		JButton p4Btn = new JButton("L O G I N");
+		p4Btn.addActionListener(this);
 		p4.add(p4Btn);
+		
 		//p4.setLayout(new BorderLayout());
 		p.add(p4, BorderLayout.CENTER);
 		
 		// 5/5 가입,찾기 버튼들
 		JPanel p5 = new JPanel();
-		p5.add(new JButton("회원가입"));
-		p5.add(new JButton("ID찾기"));
-		p5.add(new JButton("PW찾기"));
+		JButton p5BtnJoin = new JButton("회원가입");
+		JButton p5BtnId = new JButton("ID찾기");
+		JButton p5BtnPw = new JButton("PW찾기");
+		p5BtnJoin.addActionListener(this);
+		p5BtnId.addActionListener(this);
+		p5BtnPw.addActionListener(this);
+		p5.add(p5BtnJoin);
+		p5.add(p5BtnId);
+		p5.add(p5BtnPw);
 		p.add(p5);
 		
 		add(p);
@@ -88,6 +106,55 @@ public class JFrame_Test extends JFrame{
 	public static void main(String[] args) {
 		JFrame jf = new JFrame_Test();
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
+		Account ac = new Account();
+		
+		if(e.getSource() == p5BtnJoin) {
+			System.out.println("회원가입 서비스입니다.>");
+			System.out.print("이름을 입력해주세요. >>> ");
+			String name = sc.next();
+			System.out.print("아이디를 입력해주세요. >>> ");
+			String id = sc.next();
+			System.out.print("비밀번호를 입력해주세요.(4자리) >>> ");
+			int pw =  sc.nextInt();
+			System.out.print("생년월일을 입력해주세요.(8자리) >>> ");
+			int birth =  sc.nextInt();
+			System.out.print("전화번호를 입력해주세요.(010제외 8자리) >>> ");
+			int phone =  sc.nextInt();
+			ac.join(name, id, pw, birth, phone);
+			// continue;
+		}	
+		else if(e.getSource() == p4Btn) {
+		
+			String id = idIn.getSelectedText();
+			System.out.print("비밀번호를 입력해주세요. >>> ");
+			int pw = pwIn.getColumns();
+			try {
+				ac.login(id, pw);
+			} catch (Exception ex) {
+				ex.getMessage();
+			}
+			// continue;
+		}
+		else if(e.getSource() == p5BtnId) {
+			try {
+				ac.findInfo();
+			} catch (Exception ex) {
+				ex.getMessage();
+			}
+			// continue;
+		}
+		else if(e.getSource() == p5BtnPw) { 
+			System.out.println("입금 서비스입니다. 얼마를 입금하시겠습니까?>");
+			ac.deposit(sc.nextInt());
+			// continue;
+		}
+			
 	}
 
 }

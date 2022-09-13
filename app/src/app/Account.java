@@ -1,6 +1,6 @@
 package app;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Account implements Bank{
@@ -12,6 +12,7 @@ public class Account implements Bank{
 	private int pw; // 비밀번호
 	private int balance = 0; //잔액
 	private int login = 0; // -1은 로그인X, 1은 로그인O
+	private String loginTime; // 로그인 시간
 	
 	private static int max=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
 	private static Account[] member = new Account[10];
@@ -193,6 +194,9 @@ public class Account implements Bank{
 			if(member[i] == null) continue; 
 			if(id.equals(member[i].getId()) && pw==member[i].getPw()) {
 				member[i].setLogin(1);
+				Date date = new Date();
+				SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss"); // 년월일시분초
+				this.loginTime = dtFormat.format(date);
 				iNum = i;
 				System.out.println(member[i].getName() + "로그인 되었습니다.");
 			} 

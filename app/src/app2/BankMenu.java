@@ -1,17 +1,19 @@
 package app2;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class BankMenu {
-
-	private static Scanner sc = new Scanner(System.in);
+	
 	static int balance, amount = 0;
 	static List<Account> member = new ArrayList();
 	
 	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 		boolean run = true;
+		Account ac = new Account();
 		while (run) {
 			System.out.println("-------------------------------------");
 			System.out.println("1.회원가입 | 2.로그인 | 3.개인정보찾기 | 4.입금 | 5.출금 |"
@@ -19,7 +21,8 @@ public class BankMenu {
 			System.out.println("-------------------------------------");
 			System.out.print("선택 >>> ");
 			int selectNo = sc.nextInt();
-			Account ac = new Account();
+//			int selectNo = new Scanner (System.in).nextInt();
+//			int selectNo = 1;			
 			switch (selectNo) {
 			
 			case 1: 
@@ -52,7 +55,6 @@ public class BankMenu {
 				continue;
 			
 			case 3:
-				
 				try {
 					ac.findInfo();
 				} catch (Exception e) {
@@ -71,7 +73,11 @@ public class BankMenu {
 				continue;
 				
 			case 6: // 계좌이체 
-				ac.transfer();
+				System.out.println("이체를 원하는 금액을 입력해주세요.>");
+				int amount = sc.nextInt();
+				System.out.println("이체를 원하는 계좌번호를 입력해주세요.>");
+				int accountNum = sc.nextInt();
+				ac.transfer(amount, accountNum);
 				continue;
 				
 			case 7:
@@ -82,7 +88,18 @@ public class BankMenu {
 				System.out.println("개인정보변경 서비스입니다. 변경을 원하는 정보 번호를 입력해주세요.>");
 				System.out.println("1.비밀번호 | 2.전화번호");
 				int selectNo2 = sc.nextInt();
-				ac.changeInfo(selectNo2);
+				if (selectNo == 1) {
+					System.out.println("변경하실 비밀번호를 눌러주세요>");
+					int afterInfo = sc.nextInt();
+					ac.changeInfo(1, afterInfo);
+				} else if(selectNo == 2) {
+					System.out.println("변경하실 전화번호를 눌러주세요>");
+					int afterInfo = sc.nextInt();
+					ac.changeInfo(2, afterInfo);
+				} else {
+					System.out.println("1번 또는 2번을 눌러주세요.>");
+					selectNo2 = sc.nextInt();
+				}
 				continue;
 				
 			case 9:	// 로그아웃
@@ -102,6 +119,10 @@ public class BankMenu {
 				run = false;
 				break;
 			}
+		}
+		try {
+			ac.close();
+		}catch(IOException e) {e.printStackTrace();
 		}
 		System.out.println("프로그램 종료");
 	}

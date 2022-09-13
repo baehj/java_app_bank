@@ -1,11 +1,18 @@
 package app2;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.Scanner;
 
 public class Account implements Bank{
 	
-	private Scanner sc = new Scanner(System.in);
+	//private Scanner sc = new Scanner(System.in);
 	
 	private String name; // 이름
 	private String id; // 아이디
@@ -18,7 +25,8 @@ public class Account implements Bank{
 	private int balance = 0; //잔액
 	private int login = 0; // 0은 로그인X, 1은 로그인O
 	private static int total=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
-	
+	PrintWriter printw;
+	BufferedReader br;
 	public Account account; //field
 	public Account() {}
 	public Account (String name, String id, int pw, int birth, int phone) {
@@ -172,33 +180,59 @@ public class Account implements Bank{
 			account = new Account(name, id, pw, birth, phone);
 			BankMenu.member.add(account);
 			
-			
-			/*
-			 * File file = new File("C:/ioPractice/bankMember.txt"); FileWriter fwriter =
-			 * new FileWriter(file); BufferedWriter bw = new BufferedWriter(fwriter);
-			 * PrintWriter printw = new PrintWriter(bw,true); InputStream is = System.in;
-			 * InputStreamReader isr = new InputStreamReader(is); BufferedReader br = new
-			 * BufferedReader(isr); System.out.println("입력 : "); String str = "";
-			 * while(!str.equals("end")) { str = br.readLine(); printw.println(str); }
-			 * br.close(); printw.close();
-			 */
-			 
-			
 			// 3. 가입완료
 			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			System.out.println(name + "님의 가입이 완료되었습니다.");
 			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			System.out.println("이름 :  " + name);
 			System.out.println("아이디 :  " + id);
-			System.out.println("계좌번호 :  " + pw);
+			System.out.println("계좌번호 :  " + account.accountNum);
 			System.out.println("생년월일 :  " + birth);
 			System.out.println("전화번호 :  " + phone);
-			System.out.println("가입일 :  " + BankMenu.member.get(getTotal()).getJoinDate());
+			System.out.println("가입일 :  " + account.joinDate);
 			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 			
 			// 4. 가입회원수 +1
 			setTotal(getTotal()+1);
+			
+			// 5. txt 파일로 저장
+			File file = new File("C:/ioPractice/bankMember.txt");
+			FileWriter fwriter = null;
+			try {
+				fwriter = new FileWriter(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			BufferedWriter bw = new BufferedWriter(fwriter);
+			PrintWriter printw = new PrintWriter(bw, false);
+			InputStream is = System.in;
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			
+			printw.print("^"+account.name); 		//이름
+			printw.print("^"+account.id);			// 아이디
+			printw.print("^"+account.pw);			// 비밀번호
+			printw.print("^"+account.accountNum);	// 계좌번호
+			printw.print("^"+account.phone);		// 전화번호
+			printw.print("^"+account.birth);		// 생년월일
+			printw.print("^"+account.joinDate);	// 가입일
+			printw.print("^"+account.balance);	// 잔액
+			printw.println("^"+account.login);	// 로그인여부
+
+			/*
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			printw.close();
+			*/
+			
 		}
+	}
+	public void close() throws IOException {
+		br.close();
+		printw.close();
 	}
 	
 	public void login(String id, int pw) throws NotLoginException{
@@ -230,18 +264,16 @@ public class Account implements Bank{
 		return accountNum;
 	}
 	
-	public void changeInfo(int selectNo2) {
+	public void changeInfo(int selectNo2, int afterInfo) {
 		int idResult = 0;
 		for(Account member : BankMenu.member) {
 			if(member.getLogin() == 1) {
 				idResult = 1;
-				if (selectNo2 == 1) { // 전화번호 변경
-					int afterPhone = sc.nextInt();
-					member.setPhone(afterPhone);
+				if (selectNo2 == 2) { // 전화번호 변경
+					member.setPhone(afterInfo);
 					System.out.println("전화번호가 변경되었습니다.");
-				} else if (selectNo2 == 2) { // 비밀번호 변경
-					int afterPw = sc.nextInt();
-					member.setPw(afterPw);
+				} else if (selectNo2 == 1) { // 비밀번호 변경
+					member.setPw(afterInfo);
 					System.out.println("비밀번호가 변경되었습니다.");
 				}
 			}
@@ -251,11 +283,13 @@ public class Account implements Bank{
 		}
 	}
 	
-	public void transfer() {
-		System.out.println("이체를 원하는 금액을 입력해주세요.>");
-		int amount = sc.nextInt();
-		System.out.println("이체를 원하는 계좌번호를 입력해주세요.>");
-		int accountNum = sc.nextInt();
+	public void transfer(int amount, int accountNum) {
+		/*
+		 * System.out.println("이체를 원하는 금액을 입력해주세요.>");
+		 * int amount = sc.nextInt();
+		 * System.out.println("이체를 원하는 계좌번호를 입력해주세요.>");
+		 * int accountNum = sc.nextInt();
+		 */
 		int idResult = 0;
 		for(Account member : BankMenu.member) {
 			if(member.getLogin() == 1) {
