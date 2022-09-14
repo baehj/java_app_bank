@@ -21,7 +21,7 @@ public class Account implements Bank{
 	private int pw; //비밀번호
 	private int phone; // 전화번호
 	
-	private String joinDate; // 가입일
+	private int joinDate; // 가입일
 	private int balance = 0; //잔액
 	private int login = 0; // 0은 로그인X, 1은 로그인O
 	private static int total=0; // 가입자수 (실행동안 유지될 수 있게 static 변수로!)
@@ -29,6 +29,8 @@ public class Account implements Bank{
 	BufferedReader br;
 	public Account account; //field
 	public Account() {}
+	
+	/*
 	public Account (String name, String id, int pw, int birth, int phone) {
 		this.name = name;
 		this.id = id; 
@@ -41,11 +43,11 @@ public class Account implements Bank{
 		int year = cal.get(Calendar.YEAR);
 		int month = (cal.get(Calendar.MONTH)+1); // +1 꼭 해줘야 됨. 0부터 시작함
 		int date = cal.get(Calendar.DATE);
-		String joinDate = year + "년 " + month + "월 " + date + "일";
+		int joinDate = year + "년 " + month + "월 " + date + "일";
 		this.joinDate = joinDate;
 		this.balance = 0;
 		this.login = 0;
-	}
+	}*/
 	 
 	public int getTotal() {
 		return total;
@@ -101,10 +103,10 @@ public class Account implements Bank{
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	public String getJoinDate() {
+	public int getJoinDate() {
 		return joinDate;
 	}
-	public void setJoinDate(String joinDate) {
+	public void setJoinDate(int joinDate) {
 		this.joinDate = joinDate;
 	}
 	
@@ -176,9 +178,26 @@ public class Account implements Bank{
 		}
 		// 2. 계좌번호 생성, 잔고는 0으로 설정 & Member 배열에 담기
 		if (idResult == 0) {
-			//Account ac = new Account(name, id, pw, birth);
-			account = new Account(name, id, pw, birth, phone);
-			BankMenu.member.add(account);
+			// Account ac = new Account(name, id, pw, birth);
+			// account = new Account(name, id, pw, birth, phone);
+			
+			this.name = name;
+			this.id = id; 
+			this.pw = pw; 
+			this.birth = birth;
+			this.phone = phone;  
+			this.accountNum = makeAccountNum();
+			
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			int month = (cal.get(Calendar.MONTH)+1); // +1 꼭 해줘야 됨. 0부터 시작함
+			int date = cal.get(Calendar.DATE);
+			int joinDate = year + month + date;
+			this.joinDate = joinDate;
+			this.balance = 0;
+			this.login = 0;
+			
+			BankMenu.member.put(total+1, name, id, pw, birth);
 			
 			// 3. 가입완료
 			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
@@ -230,6 +249,7 @@ public class Account implements Bank{
 			
 		}
 	}
+	
 	public void close() throws IOException {
 		br.close();
 		printw.close();

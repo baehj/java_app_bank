@@ -37,7 +37,7 @@ public class BankMenu {
 				int birth =  sc.nextInt();
 				System.out.print("전화번호를 입력해주세요.(010제외 8자리) >>> ");
 				int phone =  sc.nextInt();
-				ac.join(name, id, pw, birth, phone);
+				join(name, id, pw, birth, phone);
 				continue;
 				
 			case 2: 
@@ -126,5 +126,6 @@ public class BankMenu {
 		}
 		System.out.println("프로그램 종료");
 	}
-
+	
+	
 }
