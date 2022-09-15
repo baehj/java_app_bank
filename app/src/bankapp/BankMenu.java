@@ -1,19 +1,23 @@
-package app2;
+package bankapp;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class BankMenu {
 	
-	static int balance, amount = 0;
-	static List<Account> member = new ArrayList();
+	public static Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		
+		Connection conn = DBCon.getInstance().getConnection();
+		PreparedStatement pstmt = null;
 		boolean run = true;
+		
 		Account ac = new Account();
+		User user = new User();
+		TransferList tl = new TransferList();
+		
 		while (run) {
 			System.out.println("-------------------------------------");
 			System.out.println("1.회원가입 | 2.로그인 | 3.개인정보찾기 | 4.입금 | 5.출금 |"
@@ -21,8 +25,6 @@ public class BankMenu {
 			System.out.println("-------------------------------------");
 			System.out.print("선택 >>> ");
 			int selectNo = sc.nextInt();
-//			int selectNo = new Scanner (System.in).nextInt();
-//			int selectNo = 1;			
 			switch (selectNo) {
 			
 			case 1: 
@@ -37,7 +39,35 @@ public class BankMenu {
 				int birth =  sc.nextInt();
 				System.out.print("전화번호를 입력해주세요.(010제외 8자리) >>> ");
 				int phone =  sc.nextInt();
-				join(name, id, pw, birth, phone);
+				
+				try {
+					// 1. 내이름과 전화번호로 등록된게 있는지 확인! 
+					pstmt = conn.prepareStatement(user.nameCheck(id, phone));
+					int result1 = pstmt.executeUpdate();
+					if(result1 < 1) {
+						System.out.println("가입된 내역이 있습니다.");
+						break;
+					}
+					
+					// 2. 중복 ID가 있는지 확인! , 전화번호로 등록된 내역이 있는지 확인!
+					pstmt = conn.prepareStatement(user.idCheck(id));
+					int result2 = pstmt.executeUpdate();
+					if(result2 < 1) {
+						System.out.println("중복된 ID가 있습니다.");
+						break;
+					}
+					
+					// 없다면 join!
+					if (result1 >= 1 && result2 >=1 ) {
+						pstmt = conn.prepareStatement(user.join(name, id, pw, birth, phone));
+						int result = pstmt.executeUpdate();
+						String msg = result > -1 ? "성공" : "실패";
+						System.out.println(msg);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				continue;
 				
 			case 2: 
@@ -48,7 +78,7 @@ public class BankMenu {
 				pw =  sc.nextInt();
 				
 				try {
-					ac.login(id, pw);
+	//				user.login(id, pw);
 				} catch (Exception e) {
 					e.getMessage();
 				}
@@ -56,7 +86,7 @@ public class BankMenu {
 			
 			case 3:
 				try {
-					ac.findInfo();
+	//				user.findInfo();
 				} catch (Exception e) {
 					e.getMessage();
 				}
@@ -64,12 +94,12 @@ public class BankMenu {
 				
 			case 4:
 				System.out.println("입금 서비스입니다. 얼마를 입금하시겠습니까?>");
-				ac.deposit(sc.nextInt());
+	//			ac.deposit(sc.nextInt());
 				continue;
 				
 			case 5:
 				System.out.println("출금 서비스입니다. 얼마를 출금하시겠습니까?>");
-				ac.withdraw(sc.nextInt());
+		//		ac.withdraw(sc.nextInt());
 				continue;
 				
 			case 6: // 계좌이체 
@@ -77,11 +107,11 @@ public class BankMenu {
 				int amount = sc.nextInt();
 				System.out.println("이체를 원하는 계좌번호를 입력해주세요.>");
 				int accountNum = sc.nextInt();
-				ac.transfer(amount, accountNum);
+		//		ac.transfer(amount, accountNum);
 				continue;
 				
 			case 7:
-				ac.balance();
+		//		ac.balance();
 				continue;
 				
 			case 8: // 개인정보변경
@@ -91,11 +121,11 @@ public class BankMenu {
 				if (selectNo == 1) {
 					System.out.println("변경하실 비밀번호를 눌러주세요>");
 					int afterInfo = sc.nextInt();
-					ac.changeInfo(1, afterInfo);
+		//			user.changeInfo(1, afterInfo);
 				} else if(selectNo == 2) {
 					System.out.println("변경하실 전화번호를 눌러주세요>");
 					int afterInfo = sc.nextInt();
-					ac.changeInfo(2, afterInfo);
+		//			user.changeInfo(2, afterInfo);
 				} else {
 					System.out.println("1번 또는 2번을 눌러주세요.>");
 					selectNo2 = sc.nextInt();
@@ -107,7 +137,7 @@ public class BankMenu {
 				int answer = sc.nextInt();
 				if(answer == 1) { 
 					try {
-						ac.logout();
+		//				user.logout();
 					} catch (Exception e) {
 						e.getMessage();
 					}
@@ -120,17 +150,7 @@ public class BankMenu {
 				break;
 			}
 		}
-		try {
-			ac.close();
-		}catch(IOException e) {e.printStackTrace();
-		}
 		System.out.println("프로그램 종료");
 	}
-
-	private static void join(String name, String id, int pw, int birth, int phone) {
-		join(name, id, pw, birth, phone);
-	}
-
-	
 	
 }

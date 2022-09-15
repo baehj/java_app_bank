@@ -42,10 +42,9 @@ public class Ex26 extends JFrame implements Runnable, ActionListener { //client
 		listener.start();
 		output = new JTextArea();
 		jp = new JScrollPane(output);
+		output.setEditable(false);
 		jb = jp.getVerticalScrollBar();
 		add(jp,"Center"); //output을 direct로 붙이지 않은 이유는? scrollbar객체를 생성해서 핸들링 할 수 있기때문에
-		output.setEditable(false);
-		
 		Panel bottom = new Panel(new BorderLayout());
 		label = new JLabel("사용자 이름");
 		bottom.add(label,"West");
@@ -104,7 +103,7 @@ public class Ex26 extends JFrame implements Runnable, ActionListener { //client
 				jb.setValue(jb.getMaximum());
 			}
 		}catch(Exception e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
 		
 	}

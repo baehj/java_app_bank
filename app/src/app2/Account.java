@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
 
+import study.Ex2;
+
 public class Account implements Bank{
 	
 	//private Scanner sc = new Scanner(System.in);
@@ -30,7 +32,7 @@ public class Account implements Bank{
 	public Account account; //field
 	public Account() {}
 	
-	/*
+	
 	public Account (String name, String id, int pw, int birth, int phone) {
 		this.name = name;
 		this.id = id; 
@@ -43,12 +45,12 @@ public class Account implements Bank{
 		int year = cal.get(Calendar.YEAR);
 		int month = (cal.get(Calendar.MONTH)+1); // +1 꼭 해줘야 됨. 0부터 시작함
 		int date = cal.get(Calendar.DATE);
-		int joinDate = year + "년 " + month + "월 " + date + "일";
+		int joinDate = year + month + date;
 		this.joinDate = joinDate;
 		this.balance = 0;
 		this.login = 0;
-	}*/
-	 
+	}
+	
 	public int getTotal() {
 		return total;
 	}
@@ -179,7 +181,7 @@ public class Account implements Bank{
 		// 2. 계좌번호 생성, 잔고는 0으로 설정 & Member 배열에 담기
 		if (idResult == 0) {
 			// Account ac = new Account(name, id, pw, birth);
-			// account = new Account(name, id, pw, birth, phone);
+			account = new Account(name, id, pw, birth, phone); // -> 객체안에 객체를 생성하는 꼴이 되니까!!! 구조적으로 문제있음.
 			
 			this.name = name;
 			this.id = id; 
@@ -196,8 +198,6 @@ public class Account implements Bank{
 			this.joinDate = joinDate;
 			this.balance = 0;
 			this.login = 0;
-			
-			BankMenu.member.put(total+1, name, id, pw, birth);
 			
 			// 3. 가입완료
 			System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");

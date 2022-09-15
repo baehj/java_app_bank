@@ -41,8 +41,6 @@ public class Ex25 extends Thread{
 			name = i.readLine();
 			setUser(name);
 			server.register(this); // 이름을 서버에 저장
-			
-		
 			broadcast(name+"님이 방문하셨습니다."); // 서버 등록 후 broadcast해줘야지 나포함 뿌려짐
 			while(true) {
 				String msg = i.readLine();
@@ -50,9 +48,7 @@ public class Ex25 extends Thread{
 			}
 		}catch(Exception e) {}
 		server.unregister(this);
-		
 		broadcast(name+"님이 나가셨습니다." );
-		
 		try {
 			i.close();
 			o.close();
@@ -61,9 +57,7 @@ public class Ex25 extends Thread{
 	}
 	
 	protected void println(String message) {
-		int idx = message.indexOf("#");
-		String msg = message.substring(0,idx);
-		o.println(msg);
+		o.println(message);
 	}
 	
 	private void broadcast(String message) {
