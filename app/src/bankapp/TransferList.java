@@ -1,23 +1,33 @@
 package bankapp;
 
+import java.util.Date;
+
 public class TransferList {
 
-	private int senderAccount; 		// 보내는이
-	private int receiverAccount;	// 받는이
-	private int amount; 			// 금액
-	private int remittanceDate;		// 송금일
+	private int account_num; 		
+	private int user_num;			
+	private char sort; 				
+	private int amount; 			
+	private Date transfer_date;		
 	
-	public int getSenderAccount() {
-		return senderAccount;
+	
+	public int getAccount_num() {
+		return account_num;
 	}
-	public void setSenderAccount(int senderAccount) {
-		this.senderAccount = senderAccount;
+	public void setAccount_num(int account_num) {
+		this.account_num = account_num;
 	}
-	public int getReceiverAccount() {
-		return receiverAccount;
+	public int getUser_num() {
+		return user_num;
 	}
-	public void setReceiverAccount(int receiverAccount) {
-		this.receiverAccount = receiverAccount;
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
+	public char getSort() {
+		return sort;
+	}
+	public void setSort(char sort) {
+		this.sort = sort;
 	}
 	public int getAmount() {
 		return amount;
@@ -25,11 +35,11 @@ public class TransferList {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	public int getRemittanceDate() {
-		return remittanceDate;
+	public Date getTransfer_date() {
+		return transfer_date;
 	}
-	public void setRemittanceDate(int remittanceDate) {
-		this.remittanceDate = remittanceDate;
+	public void setTransfer_date(Date transfer_date) {
+		this.transfer_date = transfer_date;
 	}
 	
 	public TransferList tl;
