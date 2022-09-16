@@ -5,31 +5,35 @@ public class Account {
 	private int account_num; // 계좌번호
 	private int user_num;	// 회원번호
 	private int balance;	// 잔액
-	private char ranking;	// 잔액
+	private String ranking;	// 잔액
 	
 	public int getAccount_num() {
 		return account_num;
 	}
-	public void setAccount_num(int account_num) {
+	public Account setAccount_num(int account_num) {
 		this.account_num = account_num;
+		return this;
 	}
 	public int getUser_num() {
 		return user_num;
 	}
-	public void setUser_num(int user_num) {
+	public Account setUser_num(int user_num) {
 		this.user_num = user_num;
+		return this;
 	}
 	public int getBalance() {
 		return balance;
 	}
-	public void setBalance(int balance) {
+	public Account setBalance(int balance) {
 		this.balance = balance;
+		return this;
 	}
-	public char getRanking() {
+	public String getRanking() {
 		return ranking;
 	}
-	public void setRanking(char ranking) {
+	public Account setRanking(String ranking) {
 		this.ranking = ranking;
+		return this;
 	}
 	
 	public Account account; //field

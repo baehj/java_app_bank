@@ -146,7 +146,7 @@ public class BankMenu {
 					rs = pstmt.executeQuery();
 					if(rs.next()) { //selectByNamePhone이 제대로 되었다면? 
 						// user 정보 찾아
-						User findUser = new User().setAccount_num(rs.getInt(1)).setName(rs.getString(2)).setId(rs.getString(3))
+						User findUser = new User().setUser_num(rs.getInt(1)).setName(rs.getString(2)).setId(rs.getString(3))
 								.setPassword(rs.getString(4)).setBirth(rs.getInt(5)).setPhone(rs.getInt(6))
 								.setJoin_date(rs.getDate(7)).setLogin_check(rs.getString(8));
 						// account 정보 찾아
@@ -154,27 +154,22 @@ public class BankMenu {
 						rs = pstmt.executeQuery();
 						if(rs.next()) {
 							
-							
-				////////////////////////////////// 여기 하던중!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							Account findAc = new Account().setUser_num(rs.getInt(1)).setName(rs.getString(2)).setId(rs.getString(3))
-									.setPassword(rs.getString(4)).setBirth(rs.getInt(5)).setPhone(rs.getInt(6))
-									.setJoin_date(rs.getDate(7)).setLogin_check(rs.getString(8));
-						}
-						
+						Account findAc = new Account().setAccount_num(rs.getInt(1)).setUser_num(rs.getInt(2)).setBalance(rs.getInt(3))
+									.setRanking(rs.getString(4));
 						
 						System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
 						System.out.println("이름 : " + findUser.getName());
 						System.out.println("ID : " + findUser.getId());
 						System.out.println("생년월일 : " + findUser.getBirth());
 						System.out.println("전화번호 : " + findUser.getPhone());
-						System.out.println("계좌번호 : " + findUser.);
-						System.out.println("잔액 : " +  + "원");
+						System.out.println("계좌번호 : " + findAc.getAccount_num());
+						System.out.println("잔액 : " + findAc.getBalance() + "원");
 						System.out.println("★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆");
+						}
 					} 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
 				continue;
 				
 			case 4: // 종료
