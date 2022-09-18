@@ -261,31 +261,6 @@ public class BankMenu {
 					pstmt = conn.prepareStatement(ac.withdraw(loginUser, amount)); // 내 계좌 잔액 변경
 					int result = pstmt.executeUpdate();
 					if(result > -1) {
-						pstmt = conn.prepareStatement(ac.selectAcByUser_num(loginUser.getUser_num()));
-						rs = pstmt.executeQuery();
-						if(rs.next()) {
-							Account loginAccount = new Account().setAccount_num(rs.getInt(1)).setUser_num(rs.getInt(2))
-									.setBalance(rs.getInt(3)).setRanking(rs.getInt(4));
-							
-							pstmt = conn.prepareStatement(tl.insertTransfer(loginAccount, reciever_account_num , - amount)); //내 거래내역에 기록
-							result = pstmt.executeUpdate();
-							if(result > -1) {
-								pstmt = conn.prepareStatement(ac.depositByAcNum(reciever_account_num, amount)); // 받는이 계좌 잔액 변경
-								result = pstmt.executeUpdate();
-								if(result > -1) {
-										pstmt = conn.prepareStatement(tl.insertTransfer(reciever_account_num, amount)); //거래내역에 기록
-										result = pstmt.executeUpdate();
-										if(result > -1) {
-											System.out.println(amount + "원 입금 되었습니다. 입금 후 잔액은 " + loginAccount.getBalance() + "원 입니다.");
-											System.out.println("다음 메뉴를 선택해주세요. >");
-										}
-									}	
-								}
-								
-								System.out.println(amount + "원 출금 되었습니다. 출금 후 잔액은 " + loginAccount.getBalance() + "원 입니다.");
-								System.out.println("다음 메뉴를 선택해주세요. >");
-							}
-						}	
 					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
