@@ -251,7 +251,7 @@ public class BankMenu {
 					e1.printStackTrace();
 				} 
 				continue;
-				
+				 
 			case 3: // 계좌이체 
 				System.out.println("이체를 원하는 금액을 입력해주세요. >>> ");
 				amount = sc.nextInt();
