@@ -11,7 +11,7 @@ public class Ex27 {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 // oracle - "oracle.jdbc.driver.OracleDriver"
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "root", "java");
-// "jdbc:oracle:thin:@loaclhost:1521:xe", "hr", "hr"
+// oracle - "jdbc:oracle:thin:@loaclhost:1521:xe", "hr", "hr"
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
