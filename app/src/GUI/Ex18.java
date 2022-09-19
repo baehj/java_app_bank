@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 public class Ex18 {
 	public Ex18() {
-		ta = new TextArea();
+	/*	ta = new TextArea();
 		ta.setEditable(false);
 		fd_load = new FileDialog(this, "파일열기", FileDialog.LOAD);
 		fd_save = new FileDialog(this, "파일저장", FileDialog.SAVE);
@@ -57,6 +57,6 @@ public class Ex18 {
 					}
 				}
 			
-		}
+		}*/
 	}
 }

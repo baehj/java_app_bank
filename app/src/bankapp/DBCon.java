@@ -11,6 +11,7 @@ public class DBCon {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/app", "root", "java");
+			//System.out.println("test"); 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

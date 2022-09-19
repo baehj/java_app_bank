@@ -11,7 +11,7 @@ public class User {
 	private int birth;
 	private int phone;
 	private Date join_date;
-	private String login_check;
+	private String admin; // Y, N
 	
 	
 	public int getUser_num() {
@@ -63,11 +63,11 @@ public class User {
 		this.join_date = join_date;
 		return this;
 	}
-	public String getLogin_check() {
-		return login_check;
+	public String getAdmin() {
+		return admin;
 	}
-	public User setLogin_check(String login_check) {
-		this.login_check = login_check;
+	public User setAdmin(String admin) {
+		this.admin = admin;
 		return this;
 	}
 	
@@ -86,8 +86,8 @@ public class User {
 		String sql = "SELECT * FROM USER WHERE ID ='" + id +"'";
 		return sql;
 	}
-	public String selectUserByUserNum(String id) {
-		String sql = "SELECT user_num FROM USER where id = '" + id + "'";
+	public String selectUserByUserNum(int user_num) {
+		String sql = "SELECT * FROM USER WHERE USER_NUM = '" + user_num + "'";
 		return sql;
 	}
 	public String selectUserByPhone(int phone) {
@@ -95,17 +95,25 @@ public class User {
 	    return sql;
 	}
 
-	/*
-	 * public String selectByIdPhone(String id1, int phone1) { String sql =
-	 * "SELECT * FROM USER WHERE ID ='" + id1 +"'"; return sql; }
-	 */	
 	public String login(String id, String password) {
-		String sql = "UPDATE USER SET LOGIN_CHECK = 'Y' WHERE ID = '" + id + "' AND PASSWORD = '" + password + "'" ;
+		String sql = "SELECT * FROM USER WHERE ID = '" + id + "' AND PASSWORD = '" + password +"'";
 		return sql;
 	}
 	public String selectUserByNamePhone(String name, int phone) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM USER WHERE NAME = '" + name + "' AND PHONE = '" + phone +"'";
+		return sql;
+	}
+	public String selectUserNumById(String id) {
+		String sql = "SELECT USER_NUM FROM USER WHERE ID = '" + id ;
+		return sql;
+	}
+	public String changePhone(int user_num, int afterPhone) {
+		String sql = "UPDATE USER SET PHONE = " + afterPhone + " WHERE USER_NUM = " + user_num;
+		return sql;
+	}
+	public String changePw(int user_num, int afterPw) {
+		String sql = "UPDATE USER SET PASSWORD = " + afterPw + " WHERE USER_NUM = " + user_num;
+		return sql;
 	}
 	
 }
